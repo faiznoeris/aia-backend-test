@@ -1,21 +1,19 @@
 const express = require('express')
 const fetch = require('node-fetch')
-const xml2js = require('xml2js')
 
 const app = express()
 const port = process.env.PORT || 4000
 
 const getFeeds = async () =>
-    await fetch('https://api.flickr.com/services/feeds/photos_public.gne', {
-        headers: { 'Content-Type': 'application/xml' },
-    }).then(resp => resp.text())
+    await fetch(
+        'https://api.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1',
+        {
+            headers: { 'Content-Type': 'application/json' },
+        }
+    ).then(resp => resp.json())
 
 app.get('/feeds', async (req, res) => {
-    const feeds = await getFeeds()
-
-    const result = await xml2js.parseStringPromise(feeds, {
-        mergeAttrs: true,
-    })
+    const result = await getFeeds()
 
     res.send(result)
 })
