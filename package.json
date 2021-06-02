@@ -5,6 +5,9 @@
     "main": "index.js",
     "author": "Muhammad Faiz Noeris<m.faiznoeris@gmail.com>",
     "license": "ISC",
+    "engines": {
+        "node": "12.16.0"
+    },
     "scripts": {
         "start": "node index.js"
     },
