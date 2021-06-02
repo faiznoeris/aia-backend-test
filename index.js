@@ -13,9 +13,11 @@ const getFeeds = async () =>
     ).then(resp => resp.json())
 
 app.get('/feeds', async (req, res) => {
+    const { limit = 1, offset = 0 } = req.query
+
     const result = await getFeeds()
 
-    res.send(result)
+    res.send({ ...result, items: result.items.slice(offset, limit) })
 })
 
 app.listen(port, () => {
