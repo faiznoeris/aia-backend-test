@@ -1,11 +1,25 @@
-const express = require('express');
-const app = express();
-const port = 4000;
+const express = require('express')
+const fetch = require('node-fetch')
+const xml2js = require('xml2js')
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+const app = express()
+const port = 4000
+
+const getFeeds = async () =>
+    await fetch('https://api.flickr.com/services/feeds/photos_public.gne', {
+        headers: { 'Content-Type': 'application/xml' },
+    }).then(resp => resp.text())
+
+app.get('/feeds', async (req, res) => {
+    const feeds = await getFeeds()
+
+    const result = await xml2js.parseStringPromise(feeds, {
+        mergeAttrs: true,
+    })
+
+    res.send(result)
 })
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`Backend app listening at http://localhost:${port}`)
 })
