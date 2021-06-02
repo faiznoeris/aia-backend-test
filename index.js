@@ -3,7 +3,7 @@ const fetch = require('node-fetch')
 const xml2js = require('xml2js')
 
 const app = express()
-const port = 4000
+const port = process.env.PORT || 4000
 
 const getFeeds = async () =>
     await fetch('https://api.flickr.com/services/feeds/photos_public.gne', {
