@@ -3,7 +3,7 @@ const { flickrService } = require('../services')
 const supertest = require('supertest')
 
 test('GET /flickr-feeds', async () => {
-    const feeds = await flickrService.getFeeds(1, 0)
+    const feeds = await flickrService.getFeeds(1, 0, '')
     const feed = feeds.items[0]
 
     await supertest(app)
