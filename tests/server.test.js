@@ -3,14 +3,13 @@ const { flickrService } = require('../services')
 const supertest = require('supertest')
 
 test('GET /flickr-feeds', async () => {
-    const feeds = await flickrService.getFeeds(1, 0, '')
+    const feeds = await flickrService.getFeeds(1, 1, '')
     const feed = feeds.items[0]
 
     await supertest(app)
         .get('/flickr-feeds')
         .expect(200)
         .then(response => {
-
             // Check type and length
             expect(Array.isArray(response.body.items)).toBeTruthy()
             expect(response.body.items.length).toEqual(1)
